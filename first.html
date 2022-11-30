@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LetsGamble</title>
+    <style>
+        header{
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="./first.html"><button>GO TO FIRST PHASE</button></a>
+        <a href="./second.html"><button>GO TO SECOND PHASE</button></a>
+        <a href="./third.html"><button>GO FINAL PHASE</button></a>
+    </header>
+    <h2>Who all will get the biggest number out of all that will be winner</h2>
+    Gambler1: <input type="text" value="Ram">
+    <button class="gamble" id="1">Lets Gamble</button>
+    DiceNumber: <span></span><br><br>
+    
+    Gambler2: <input type="text" value="Shyam">
+    <button class="gamble" id="2">Lets Gamble</button>
+    DiceNumber: <span></span><br><br>
+    
+    Gambler3: <input type="text" value="Bahadur">
+    <button class="gamble" id="3">Lets Gamble</button>
+    DiceNumber: <span></span><br><br>
+    
+    Gambler4: <input type="text" value="Vinod">
+    <button class="gamble" id="4">Lets Gamble</button>
+    DiceNumber: <span></span><br><br>
+    
+    Gambler5: <input type="text" value="Harry">
+    <button class="gamble" id="5">Lets Gamble</button>
+    DiceNumber: <span></span><br><br>
+
+    <button class="winner">Find winner</button><br><br>
+    <div class="output"></div>
+
+    <script>
+        let playerNames = document.querySelectorAll("input")
+        let gambleBtns = document.querySelectorAll(".gamble")
+        let scoreArea = document.querySelectorAll("span")
+        let choices = [1,2,3,4,5,6]
+        let output = document.querySelector(".output")
+        for(t of gambleBtns){
+            t.addEventListener("click",dicePlay)
+        }
+        function dicePlay(e){
+            let user_id = e.target.id - 1; // -1 is because if id is 3 then player is 3 but player info is stored in playernames array at 2 positions and i want to give dice value in the DiceNumber
+            let random = parseInt(Math.random()*choices.length)
+            let diceValue = choices[random]
+            scoreArea[user_id].innerText =`${diceValue}`
+            }
+        let winnerBtn = document.querySelector(".winner")
+        winnerBtn.addEventListener("click",findWinner)
+        function findWinner(){
+            let highestDiceNumber=1;
+            for(let t of scoreArea){
+                if(t.innerText>highestDiceNumber){
+                    highestDiceNumber = t.innerText;
+                }
+            }
+            console.log(highestDiceNumber)
+            let positionsOfWinner=[]
+            for(i=0;i<=scoreArea.length-1;i++){
+                if(scoreArea[i].innerText==highestDiceNumber){
+                    positionsOfWinner.push(i);
+                }
+            }
+            let winnerNames = [];
+            for(let t of positionsOfWinner){
+                winnerNames.push(playerNames[t].value)
+            }
+            let winnerNamesString = winnerNames.join(" and ")
+            output.innerText = `Winner is ${winnerNamesString}`
+
+        }    
+    </script>
+</body>
+</html>
